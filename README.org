@@ -2,6 +2,16 @@
 
 This code allows you to evaluate HTML in org-mode code blocks.
 
+* Setup
+
+#+begin_src emacs-lisp
+(with-eval-after-load "org"
+  (require 'ob-html)
+  (org-babel-html-enable-open-src-block-result-temporary)) ;;Enable C-c C-o on html code block
+#+end_src
+
+Customize the variable ~org-babel-html-chrome-executable~ or ~org-babel-html-screenshot-method~.
+
 * Examples:
 ** Generate html export block( ~#+begin_export html~ ~ ~#+end_export~)
 
@@ -28,3 +38,12 @@ This code allows you to evaluate HTML in org-mode code blocks.
 <html><head><title>example</title></head><body><p>Hello</p></body></html>
 ,#+end_src
 #+end_src
+
+* TODO
+
+- Add session support
+- Add more screenshot methods
+  - PhantomJS
+  - puppeteer
+  - PlayWright
+- Fix org-babel-html-chrome-executable
