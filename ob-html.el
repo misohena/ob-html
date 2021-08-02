@@ -93,17 +93,7 @@ This function is called by `org-babel-execute-src-block'."
     (cond
      ;; Take a Screenshot
      (graphics-file
-
-      (let ((html-file
-             (let ((org-babel-temporary-directory default-directory))
-               (org-babel-temp-file "ob-html-temp" ".html"))))
-
-        (unwind-protect
-            (progn
-              (with-temp-file html-file (insert body))
-              (org-babel-html-take-screenshot html-file graphics-file params))
-          (delete-file html-file)))
-
+      (org-babel-html-take-screenshot-string body graphics-file params)
       nil)
 
      ;; HTML As Value
@@ -116,6 +106,17 @@ This function is called by `org-babel-execute-src-block'."
 
 
 ;; Screenshot
+
+(defun org-babel-html-take-screenshot-string (body graphics-file params)
+  (let ((html-file
+         (let ((org-babel-temporary-directory default-directory))
+           (org-babel-temp-file "ob-html-temp-" ".html"))))
+    (unwind-protect
+        (progn
+          (with-temp-file html-file (insert body))
+          (org-babel-html-take-screenshot html-file graphics-file params))
+      (delete-file html-file)))
+  )
 
 (defun org-babel-html-take-screenshot (html-file graphics-file params)
   (cond
