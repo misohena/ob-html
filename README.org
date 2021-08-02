@@ -50,6 +50,15 @@ Generate screenshot image file:
 [​[file:example.png]]
 #+end_src
 
+Generate nothing but open HTML as temporary file:
+
+#+begin_src org
+,#+begin_src html
+<!DOCTYPE html>
+<html><head><title>example</title></head><body><p>Hello</p></body></html>
+,#+end_src
+#+end_src
+
 * TODO
 
 - Add session support

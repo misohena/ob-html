@@ -41,6 +41,12 @@
 ;;   <!DOCTYPE html>
 ;;   <html><head><title>example</title></head><body><p>Example</p></body></html>
 ;;   #+end_src
+;;
+;; - The result is silent but open HTML as temporary file
+;;   #+begin_src html
+;;   <html><head><title>example</title></head><body><p>Example</p></body></html>
+;;   #+end_src
+;;   NOTE: Hit C-c C-o to open the file in your browser
 
 ;;; Code:
 (require 'ob)
@@ -67,6 +73,15 @@
   "Absolute path to Google Chrome."
   :group 'org-babel
   :type 'string)
+
+(defcustom org-babel-html-execution-method-silent
+  'org-babel-html-open-as-temporary-file
+  "Specifies how to execute a code block that :results is silent."
+  :group 'org-babel
+  :type '(choice (const :tag "Do nothing" nil)
+                 (const :tag "Open as temporary file"
+                        org-babel-html-open-as-temporary-file)
+                 function))
 
 ;; Define Babel Varibles & Functions
 
@@ -97,6 +112,12 @@ This function is called by `org-babel-execute-src-block'."
      (graphics-file
       (org-babel-html-take-screenshot-string body graphics-file params)
       nil)
+
+     ;; results is silent
+     ((member "silent" result-params)
+      (if (functionp org-babel-html-execution-method-silent)
+          (funcall org-babel-html-execution-method-silent body)
+        body))
 
      ;; HTML As Value
      (t
@@ -139,6 +160,49 @@ This function is called by `org-babel-execute-src-block'."
                       window-size
                       (shell-quote-argument html-file))))
     (org-babel-eval cmd "")))
+
+
+;; Open HTML as temporary file
+
+(defun org-babel-html-enable-open-src-block-result-temporary ()
+  "Enable to open html code block as temporary file when
+`org-babel-open-src-block-result' (C-c C-o) calling."
+  (interactive)
+  (advice-add 'org-babel-open-src-block-result :around
+              'org-babel-html-open-src-block-result-advice))
+
+(defun org-babel-html-open-src-block-result-advice (old-func &optional args)
+  (pcase (org-babel-get-src-block-info 'light)
+    ;; html and doesn't have a :file header argument
+    (`("html" ,body
+       ,(and arguments (guard (null (assq :file arguments)))) ,_ ,_ ,_ ,_)
+     (org-babel-html-open-as-temporary-file body))
+    ;; otherwise
+    (_
+     (apply old-func args))))
+
+(defun org-babel-html-open-src-block-as-temporary-file ()
+  "Open the pointed html code block as temporary file."
+  (interactive)
+  (pcase (org-babel-get-src-block-info 'light)
+    (`(,_ ,body ,_ ,_ ,_ ,_ ,_)
+     (org-babel-html-open-as-temporary-file body))
+    (_ nil)))
+
+(defvar org-babel-html-waiting-time-for-open-temporary-file 0.75)
+
+(defun org-babel-html-open-as-temporary-file (body)
+  "Open the HTML String BODY."
+  (let ((html-file (let ((temporary-file-directory default-directory))
+                     (make-temp-file "ob-html-temp-" nil ".html" body))))
+    (unwind-protect
+        (progn
+          (browse-url-of-file html-file)
+          (sleep-for org-babel-html-waiting-time-for-open-temporary-file))
+      (delete-file html-file)))
+  ;; return result value
+  body)
+
 
 (provide 'ob-html)
 ;;; ob-html.el ends here
