@@ -1,0 +1,30 @@
+#+TITLE: ob-html.el
+
+This code allows you to evaluate HTML in org-mode code blocks.
+
+* Examples:
+** Generate html export block( ~#+begin_export html~ ~ ~#+end_export~)
+
+#+begin_src org
+,#+begin_src html :results html
+<p><strong>STRONG</strong> <ins>INS</ins> <del>DEL</del></p>
+,#+end_src
+#+end_src
+
+** Generate external html file
+
+#+begin_src org
+,#+begin_src html :results file :file example.html
+<!DOCTYPE html>
+<html><head><title>example</title></head><body><p>Example</p></body></html>
+,#+end_src
+#+end_src
+
+** Generate screenshot image file
+
+#+begin_src org
+,#+begin_src html :results file graphics :file example.png :width 640 :height 100
+<!DOCTYPE html>
+<html><head><title>example</title></head><body><p>Hello</p></body></html>
+,#+end_src
+#+end_src
