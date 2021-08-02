@@ -59,7 +59,7 @@ Generate nothing but open HTML as temporary file:
 ,#+end_src
 #+end_src
 
-* TODO
+* ToDo
 
 - Add session support
 - Add more screenshot methods
