@@ -75,9 +75,9 @@
 (defun org-babel-expand-body:html (body params)
   (dolist (var (org-babel--get-vars params))
     (setq body (replace-regexp-in-string
-		(regexp-quote (format "$%s" (car var)))
-		(format "%s" (cdr var))
-		body nil 'literal)))
+                (regexp-quote (format "$%s" (car var)))
+                (format "%s" (cdr var))
+                body nil 'literal)))
   body)
 
 (defun org-babel-execute:html (body params)
@@ -86,9 +86,9 @@ This function is called by `org-babel-execute-src-block'."
   (let ((result-params (cdr (assq :result-params params)))
         (result-type (cdr (assq :result-type params)))
         (graphics-file (and (member "graphics" (assq :result-params params))
-			    (org-babel-graphical-output-file params)))
-	(body (org-babel-expand-body:html
-	       (replace-regexp-in-string "^," "" body) params)))
+                            (org-babel-graphical-output-file params)))
+        (body (org-babel-expand-body:html
+               (replace-regexp-in-string "^," "" body) params)))
 
     (cond
      ;; Take a Screenshot
