@@ -22,6 +22,12 @@
 
 ;; This code allows you to evaluate HTML in org-mode code blocks.
 
+;;; Setup:
+
+;;   (with-eval-after-load "org"
+;;     (require 'ob-html)
+;;     (org-babel-html-enable-open-src-block-result-temporary)) ;;Enable C-c C-o on html code block
+
 ;;; Examples:
 
 ;; - The result is html export block(#+begin_export:html ~ #+end_export)
