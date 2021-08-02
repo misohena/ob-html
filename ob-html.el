@@ -87,7 +87,6 @@
   "Execute a block of HTML code with.
 This function is called by `org-babel-execute-src-block'."
   (let ((result-params (cdr (assq :result-params params)))
-        (result-type (cdr (assq :result-type params)))
         (graphics-file (and (member "graphics" (assq :result-params params))
                             (org-babel-graphical-output-file params)))
         (body (org-babel-expand-body:html
