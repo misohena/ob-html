@@ -48,10 +48,13 @@
 ;; Settings
 
 (defcustom org-babel-html-screenshot-method
-  #'org-babel-html-take-screenshot-by-chrome
+  'org-babel-html-take-screenshot-by-chrome
   "Method to take screenshot."
   :group 'org-babel
-  :type 'function)
+  :type '(choice (const :tag "Off" nil)
+                 (const :tag "Headless Chrome"
+                        org-babel-html-take-screenshot-by-chrome)
+                 function))
 
 (defcustom org-babel-html-chrome-executable
   (cond
