@@ -139,7 +139,6 @@ This function is called by `org-babel-execute-src-block'."
                       (shell-quote-argument (expand-file-name graphics-file))
                       window-size
                       (shell-quote-argument html-file))))
-    (message "execute %s" cmd)
     (org-babel-eval cmd "")))
 
 (provide 'ob-html)
