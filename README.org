@@ -2,6 +2,8 @@
 
 This code allows you to evaluate HTML in org-mode code blocks.
 
+[[file:./screenshot.png]]
+
 * Setup
 
 #+begin_src emacs-lisp
