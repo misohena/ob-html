@@ -107,11 +107,11 @@
 (defun org-babel-execute:html (body params)
   "Execute a block of HTML code with.
 This function is called by `org-babel-execute-src-block'."
-  (let ((result-params (cdr (assq :result-params params)))
-        (graphics-file (and (member "graphics" (assq :result-params params))
-                            (org-babel-graphical-output-file params)))
-        (body (org-babel-expand-body:html
-               (replace-regexp-in-string "^," "" body) params)))
+  (let* ((result-params (cdr (assq :result-params params)))
+         (graphics-file (and (member "graphics" result-params)
+                             (org-babel-graphical-output-file params)))
+         (body (org-babel-expand-body:html
+                (replace-regexp-in-string "^," "" body) params)))
 
     (cond
      ;; Take a Screenshot
