@@ -25,19 +25,19 @@
 ;;; Examples:
 
 ;; - The result is html export block(#+begin_export:html ~ #+end_export)
-;;   #+begin_src html :results html
+;;   #+begin_src html :results replace html
 ;;   <p><strong>STRONG</strong> <ins>INS</ins> <del>DEL</del></p>
 ;;   #+end_src
 ;;
 ;; - The result is external html file
-;;   #+begin_src html :results file :file example.html
+;;   #+begin_src html :results replace file :file example.html
 ;;   <!DOCTYPE html>
 ;;   <html><head><title>example</title></head><body><p>Example</p></body></html>
 ;;   #+end_src
 ;;   NOTE: Hit C-c C-o to open the file in your browser
 ;;
 ;; - The result is screenshot image file
-;;   #+begin_src html :results file graphics :file example.png :width 640 :height 100
+;;   #+begin_src html :results replace file graphics :file example.png :width 640 :height 100
 ;;   <!DOCTYPE html>
 ;;   <html><head><title>example</title></head><body><p>Example</p></body></html>
 ;;   #+end_src
@@ -71,7 +71,7 @@
 ;; Define Babel Varibles & Functions
 
 (defvar org-babel-default-header-args:html
-  '((:results . "replace")
+  '((:results . "silent")
     (:exports . "code"))
   "Default arguments for evaluating an html source block.")
 
