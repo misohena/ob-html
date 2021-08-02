@@ -119,7 +119,11 @@ This function is called by `org-babel-execute-src-block'."
       (org-babel-html-take-screenshot-string body graphics-file params)
       nil)
 
-     ;; results is silent
+     ;; Generate file
+     ((member "file" result-params)
+      body)
+
+     ;; results is silent (and !graphics-file !file)
      ((member "silent" result-params)
       (if (functionp org-babel-html-execution-method-silent)
           (funcall org-babel-html-execution-method-silent body)
