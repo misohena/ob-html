@@ -140,6 +140,8 @@ This function is called by `org-babel-execute-src-block'."
 
 ;; Screenshot
 
+(defvar org-babel-temporary-directory)
+
 (defun org-babel-html-take-screenshot-string (body graphics-file params)
   (let ((html-file
          (let ((org-babel-temporary-directory default-directory))
